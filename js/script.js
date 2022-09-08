@@ -227,7 +227,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
             12,
             ".menu .container"
     ).render();
-<<<<<<< HEAD
+
 
     //Forms
     // const forms = document.querySelectorAll("form");
@@ -272,19 +272,17 @@ window.addEventListener('DOMContentLoaded', ()=> {
         loading: "img/form/spinner.svg",
         success: "Дякую, незабаром ми з вами зв'яжимося!&#128521",
         failure: "Щось пішло не так &#128551"
-=======
+
     const forms = document.querySelectorAll('form');
     const message = {
         loading: "Завантаження",
         success: "Дякую, незабаром ми з вами зв'яжимося",
         failure: "Щось пішло не так..."
->>>>>>> 7141477b614730c6de911897829345ca215691b6
     };
     forms.forEach(item => {
         postData(item);
     });
     function postData(form){
-<<<<<<< HEAD
         form.addEventListener('submit', (e) => {
             e.preventDefault();
         
@@ -340,7 +338,6 @@ window.addEventListener('DOMContentLoaded', ()=> {
     
 
 });
-=======
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
@@ -374,4 +371,3 @@ window.addEventListener('DOMContentLoaded', ()=> {
     });
 }   
 });
->>>>>>> 7141477b614730c6de911897829345ca215691b6
