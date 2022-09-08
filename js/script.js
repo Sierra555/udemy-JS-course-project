@@ -227,6 +227,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
             12,
             ".menu .container"
     ).render();
+<<<<<<< HEAD
 
     //Forms
     // const forms = document.querySelectorAll("form");
@@ -271,11 +272,19 @@ window.addEventListener('DOMContentLoaded', ()=> {
         loading: "img/form/spinner.svg",
         success: "Дякую, незабаром ми з вами зв'яжимося!&#128521",
         failure: "Щось пішло не так &#128551"
+=======
+    const forms = document.querySelectorAll('form');
+    const message = {
+        loading: "Завантаження",
+        success: "Дякую, незабаром ми з вами зв'яжимося",
+        failure: "Щось пішло не так..."
+>>>>>>> 7141477b614730c6de911897829345ca215691b6
     };
     forms.forEach(item => {
         postData(item);
     });
     function postData(form){
+<<<<<<< HEAD
         form.addEventListener('submit', (e) => {
             e.preventDefault();
         
@@ -331,3 +340,38 @@ window.addEventListener('DOMContentLoaded', ()=> {
     
 
 });
+=======
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const statusMessage = document.createElement('div');
+        statusMessage.textContent = message.loading;
+        form.append(statusMessage);
+
+        const request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+    request.setRequestHeader("Content-type", "application/json");
+
+        const formData = new FormData(form);
+        const obj = {};
+        formData.forEach((value,key) => {
+            obj.key = value;
+        });
+        const json = JSON.stringify(obj);
+        request.send(json);
+        request.addEventListener("load", () => {
+            if (request.status === 200) {
+                statusMessage.textContent = message.success;
+                console.log(request.response);
+                form.reset();
+                setTimeout(() => {
+                    statusMessage.remove();
+                }, 3000);
+            }
+            else { statusMessage.textContent = message.failure; }
+        });
+
+    });
+}   
+});
+>>>>>>> 7141477b614730c6de911897829345ca215691b6
