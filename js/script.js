@@ -117,8 +117,8 @@ window.addEventListener('DOMContentLoaded', ()=> {
     setTimer(".timer", deadline);
     //modal 
     const modalTriggers = document.querySelectorAll('[data-modal]'),
-          modal = document.querySelector(".modal"),
-        modalClose = document.querySelector('[data-close]');
+        modal = document.querySelector(".modal");
+      
    
     function openModal() {
          modal.classList.add('show');
@@ -138,11 +138,11 @@ window.addEventListener('DOMContentLoaded', ()=> {
         modal.classList.add('hide');
         //  modal.classList.toggle('show');
          document.body.style.overflow = ''; }
-     modalClose.addEventListener('click', closeModal);
+   
 
       modal.addEventListener('click', (event) => {
-             const target = event.target;
-             if (target === modal) {
+          const target = event.target;
+             if (target === modal|| target.getAttribute("data-close")=="") {
                  closeModal();
           }
       });
@@ -208,7 +208,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
             'Меню "Фітнес"',
             'Меню "Фітнес" - це новий підхід до приготування страв: більше свіжих овочів та фруктів. Продукт активних та здорових людей. Це абсолютно новий продукт з оптимальною ціною та високою якістю!',
             6.5,
-            ".menu .container",
+            ".menu .container"
         ).render();
     
         new MenuCard(
@@ -217,7 +217,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
             'Меню “Преміум”',
             'Меню “Пісне” - це ретельний підбір інгредієнтів: повна відсутність продуктів тваринного походження, молоко з мигдалю, вівса, кокосу або гречки, правильна кількість білків за рахунок тофу та імпортних стейків вегетаріанських',
             15.5,
-            ".menu .container",
+            ".menu .container"
         ).render();
         new MenuCard(
             "img/tabs/post.jpg",
@@ -225,7 +225,109 @@ window.addEventListener('DOMContentLoaded', ()=> {
             'Меню "Пісне"',
             'Меню “Пісне” - це ретельний підбір інгредієнтів: повна відсутність продуктів тваринного походження, молоко з мигдалю, вівса, кокосу або гречки, правильна кількість білків за рахунок тофу та імпортних стейків вегетаріанських',
             12,
-            ".menu .container",
+            ".menu .container"
     ).render();
+
+    //Forms
+    // const forms = document.querySelectorAll("form");
+    // const message = {
+    //     loading:"Завантаження",
+    //     success: "Дякую! Невдовзі ми з вами зв'яжемося",
+    //     failure: "Упс, щось пішло не так :("
+    // };
+    // forms.forEach(item => {
+    //     postData(item);
+    // });
+    // function postData(form) {
+    //     form.addEventListener("submit", (e) => {
+    //         e.preventDefault();
+
+    //         const statusMessage = document.createElement('div');
+    //         statusMessage.textContent = message.loading;
+    //         form.append(statusMessage);
+
+    //         const request = new XMLHttpRequest();
+    //         request.open('POST', 'server.php');
+    //         // request.setRequestHeader("Content-type", "multipart/form-data");
+            
+    //         const formData = new FormData(form);
+    //         request.send(formData);
+    //         request.addEventListener('load',()=> {
+    //             if (request.status === 200) {
+    //                 console.log(request.response);
+    //                 statusMessage.textContent = message.success;
+    //                 form.reset();
+    //                 setTimeout(() => {
+    //                     statusMessage.remove();
+    //                 }, 5000);
+    //             }
+    //             else { statusMessage.textContent = message.failure;}
+    //         });
+    //     });
+    // }
+    //json
+    const forms = document.querySelectorAll('form');
+    const message = {
+        loading: "img/form/spinner.svg",
+        success: "Дякую, незабаром ми з вами зв'яжимося!&#128521",
+        failure: "Щось пішло не так &#128551"
+    };
+    forms.forEach(item => {
+        postData(item);
+    });
+    function postData(form){
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+        
+            const statusMessage = document.createElement('img');
+            statusMessage.src = message.loading;
+            statusMessage.classList.add('spinner');
+            form.insertAdjacentElement("afterend", statusMessage);
+
+            //     const request = new XMLHttpRequest();
+            //     request.open('POST', 'server.php');
+            // request.setRequestHeader("Content-type", "application/json");
+
+            const formData = new FormData(form);
+            const obj = {};
+            formData.forEach((value, key) => {
+                obj[key] = value;
+            });
+
+            fetch('server.php', {
+                method: 'POST',
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(obj)
+            }).then(data => data.text())
+                .then(data => {
+                    showThanksModal(message.success);
+                    console.log(data);
+                    statusMessage.remove();
+                })
+                .catch(() => { showThanksModal(message.failure); })
+                .finally(() => { form.reset(); });
+      
+      
+    });
+    }
+    function showThanksModal(message) {
+        const prevModalDialog = document.querySelector(".modal__dialog");
+        prevModalDialog.classList.add("hide");
+        openModal();
+        const thanksModal = document.createElement('div');
+        thanksModal.classList.add('modal__dialog');
+        thanksModal.innerHTML = `<div class="modal__content">
+        <div data-close class="modal__close">&times;</div>
+        <div class="modal__title">${message}</div>
+     </div>`;
+        document.querySelector('.modal').append(thanksModal);
+        setTimeout(() => {
+            thanksModal.remove();
+            prevModalDialog.classList.add("show");
+            prevModalDialog.classList.remove("hide");
+            closeModal();
+        }, 4000);
+    }
     
+
 });
