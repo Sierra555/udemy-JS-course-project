@@ -227,6 +227,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
             12,
             ".menu .container"
     ).render();
+<<<<<<< HEAD
 
 
     //Forms
@@ -273,6 +274,8 @@ window.addEventListener('DOMContentLoaded', ()=> {
         success: "Дякую, незабаром ми з вами зв'яжимося!&#128521",
         failure: "Щось пішло не так &#128551"
 
+=======
+>>>>>>> 7141477b614730c6de911897829345ca215691b6
     const forms = document.querySelectorAll('form');
     const message = {
         loading: "Завантаження",
@@ -283,6 +286,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
         postData(item);
     });
     function postData(form){
+<<<<<<< HEAD
         form.addEventListener('submit', (e) => {
             e.preventDefault();
         
@@ -338,6 +342,8 @@ window.addEventListener('DOMContentLoaded', ()=> {
     
 
 });
+=======
+>>>>>>> 7141477b614730c6de911897829345ca215691b6
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
@@ -370,4 +376,8 @@ window.addEventListener('DOMContentLoaded', ()=> {
 
     });
 }   
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 7141477b614730c6de911897829345ca215691b6
